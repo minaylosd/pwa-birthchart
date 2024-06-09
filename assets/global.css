@@ -1,0 +1,138 @@
+@font-face {
+  font-family: "Metamorphous";
+  src: local("Metamorphous"),
+    url("~/assets/fonts/Metamorphous-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: local("Manrope"),
+    url("~/assets/fonts/Manrope-ExtraLight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: local("DM Sans"),
+    url("~/assets/fonts/dm-sans-extra-light.ttf") format("truetype");
+}
+
+:root {
+  --font-standard: "Inter", sans-serif;
+  --font-main: "Manrope";
+  --font-display: "Metamorphous";
+  --font-main-var: "DM Sans";
+
+  font-family: var(--font-main);
+  line-height: 1.5;
+  font-weight: 400;
+  font-style: normal;
+
+  --size-2xl: 2.5rem;
+  --size-xl: 2.25rem;
+  --size-lg: 2rem;
+  --size-md: 1.5rem;
+  --size-sm: 1.25rem;
+  --size-xs: 0.875rem;
+  --size-xxs: 0.75rem;
+
+  /* --background: #121212; */
+  --background: rgb(15, 18, 22);
+  --background-light: rgb(15, 20, 26);
+  --background-shade: rgb(12, 14, 16);
+  --orange: #ff8a22;
+  --green: #12d861;
+  --yellow: #f1ff48;
+  --purple: #6d1dba;
+  --pink: #f56ebd;
+
+  color: white;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+body {
+  background-color: var(--background);
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 64px;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--size-xl);
+  line-height: 1.1;
+  margin: var(--size-md) 0;
+  text-align: left;
+  padding: 0 1rem;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: var(--size-lg);
+  padding: 0 1rem;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: var(--size-md);
+  padding: 0 1rem;
+}
+
+h4 {
+  font-family: var(--font-display);
+  font-size: var(--size-sm);
+  padding: 0 1rem;
+}
+
+p {
+  font-size: var(--size-md);
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+#app {
+  max-width: 1280px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  overflow: hidden;
+}
