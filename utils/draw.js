@@ -283,7 +283,7 @@ function drawCircle(svg, cx, cy, r, type) {
         // get details about planet onclick
         icon.addEventListener("click", function () {
           const storedData = JSON.parse(this.getAttribute("data-planet-info"));
-          console.log(storedData);
+          // console.log(storedData);
           // Check if there are other scaled-up planet icons
           const scaledPlanets = d3.selectAll('svg[type="planet"][width="32"]');
           if (scaledPlanets.size() > 0) {
@@ -337,7 +337,7 @@ function drawCircle(svg, cx, cy, r, type) {
               infoWindow.style.opacity = "0";
               infoWindow.style.backgroundColor = "#0f1216";
               infoWindow.style.padding = "16px";
-              console.log(storedData);
+              // console.log(storedData);
 
               
               // console.log(aspects);
@@ -357,11 +357,11 @@ function drawCircle(svg, cx, cy, r, type) {
               aspects.forEach((aspect) => {
                 const aspectElement = document.createElement("p");
                 aspectElement.classList.add("info-aspect");
-                console.log("attr:", aspect.attributes[2].value)
-                console.log("name:", storedData.name)
+                // console.log("attr:", aspect.attributes[2].value)
+                // console.log("name:", storedData.name)
                 let secondPlanet = aspect.attributes[2].value.replace(`${storedData.name}`,'');
                 secondPlanet = secondPlanet.replace(" ", "");
-                console.log("planet:", secondPlanet);
+                // console.log("planet:", secondPlanet);
                 const aspectType = aspect.attributes[3].value;
                 aspectElement.innerHTML = `${aspectType} ${storedData.name} <img src="/icons/planets/${storedData.name}.svg" alt="" class="info-aspect-icon" /> <span class=${aspectType == "trigone"? "" : "aspect-type-font-big"}>${aspectsSymbols[aspectType]}</span> <img src="/icons/planets/${secondPlanet}.svg" alt="" class="info-aspect-icon" /> ${secondPlanet}`;
                 infoScroll.appendChild(aspectElement);
