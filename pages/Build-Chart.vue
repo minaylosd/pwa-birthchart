@@ -6,18 +6,10 @@ import { drawNatalChart } from "../utils/draw";
 
 const showForm = ref(true);
 
-const showCitiesList = ref(false);
-const cities = ref([]);
-
-const loadingCities = ref(false);
-const loaded = ref(false);
-
-const dateRef = ref("2000-01-01");
-const timeRef = ref("00:00");
-const cityRef = ref("");
-const latitudeRef = ref("");
-const longitudeRef = ref("");
-const timezoneRef = ref("");
+const chartDate = ref("");
+const chartTime = ref("");
+const chartCity = ref("");
+const chartTimezone = ref("");
 
 const fetchedParams = ref([]);
 
@@ -87,7 +79,11 @@ function prepareDownloadSvg() {
 const error = ref(null);
 
 async function handleBuildChart(formData) {
-  const { date, time, latitude, longitude, timezone } = formData;
+  const { date, time, city, latitude, longitude, timezone } = formData;
+  chartDate.value = date;
+  chartTime.value = time;
+  chartCity.value = city;
+  chartTimezone.value = timezone;
   const formattedTimezone = convertTimeZoneFormat(timezone);
   let params =
     "" + date + "?" + time + "?" + latitude + "?" + longitude + "?" + timezone;
@@ -131,7 +127,20 @@ async function handleBuildChart(formData) {
 </script>
 
 <template>
-  <h1>Build chart</h1>
+  <h1 v-if="showForm">Build chart</h1>
+  <div v-else class="heading">
+    <div class="half">
+      <h1 class="date-time">
+        Chart for
+        <span>{{ chartDate }} {{ chartTime }}</span>
+      </h1>
+      <p class="address">{{ chartCity }}</p>
+    </div>
+    <div class="half">
+      <p class="timezone">/</p>
+      <p class="geometry">{{ chartTimezone }}</p>
+    </div>
+  </div>
   <AppForm v-if="showForm" type="build" @form-submitted="handleBuildChart" />
   <div>
     <div v-for="(param, index) in fetchedParams" :key="index">{{ param }}</div>
@@ -355,35 +364,49 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   transform: scale(0.7);
 }
 
-.city {
+.heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding: 0 8px 8px 8px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+  padding: 16px;
+  margin: 0;
 }
 
-.city h4 {
+.half {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 48px;
+}
+
+.date-time {
+  margin: 0 0 8px 0;
   padding: 0;
-  font-size: 1.125rem;
-  text-align: left;
-}
-
-.city p {
-  font-size: var(--size-xxs);
-  font-weight: 200;
-  text-align: left;
-}
-
-.city .timezone {
   font-size: var(--size-sm);
-  text-align: right;
 }
 
-.city .geometry {
+.date-time span {
+  font-family: var(--font-main-var);
+}
+.address {
+  font-size: var(--size-xxs);
+  font-family: var(--font-main-var);
+  font-weight: 200;
+}
+
+.timezone {
+  font-size: var(--size-sm);
+  font-family: var(--font-main-var);
+  text-align: right;
+  font-weight: 200;
+}
+
+.geometry {
   text-align: right;
   font-size: var(--size-xxs);
+  font-family: var(--font-main-var);
   white-space: nowrap;
+  font-weight: 200;
 }
 </style>

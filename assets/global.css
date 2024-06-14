@@ -80,7 +80,7 @@ main {
 
 h1 {
   font-family: var(--font-display);
-  font-size: var(--size-xl);
+  font-size: var(--size-lg);
   line-height: 1.1;
   margin: var(--size-md) 0;
   text-align: left;
@@ -135,4 +135,44 @@ button:focus-visible {
   padding: 0;
   text-align: center;
   overflow: hidden;
+}
+
+.info-h3 {
+  padding: 0;
+}
+
+.info-zodiac-icon {
+  width: 25px;
+  transform: translateY(4px);
+}
+
+.info-deg {
+  font-family: var(--font-main-var);
+  font-size: var(--size-xs);
+  font-weight: 200;
+}
+
+.info-type {
+  font-size: var(--size-sm);
+}
+
+.info-aspect {
+  font-size: var(--size-xs);
+}
+
+.info-aspect-icon {
+  width: 16px;
+}
+
+.aspect-type-font-big {
+  font-size: var(--size-sm);
+}
+
+.info-close-btn {
+  position: absolute;
+  background-color: transparent;
+  color: #fff;
+  top: 0;
+  right: 8px;
+  font-family: var(--font-display);
 }

@@ -4,7 +4,6 @@ const dateQuery = query.query;
 const [date, time, latitude, longitude, timezone] = dateQuery.split('?')
 
 
-
 // const rawQuery = string.split('?')[1]; 
 // function parseQuery(queryString) { const query = {}; const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&'); for (let i = 0; i < pairs.length; i++) { const pair = pairs[i].split('='); query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || ''); } return query; } const query = parseQuery(rawQuery);
 

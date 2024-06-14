@@ -53,8 +53,8 @@ function drawCircle(svg, cx, cy, r, type) {
       const radians = (sign.start - 90) * (Math.PI / 180);
   
       // here instead of zodiacR use full screen width
-      const x = radiuses.CX - (radiuses.width / 2) * Math.cos(radians);
-      const y = radiuses.CY + (radiuses.width / 2) * Math.sin(radians);
+      const x = radiuses.CX - (radiuses.width / 2 - 8) * Math.cos(radians);
+      const y = radiuses.CY + (radiuses.width / 2 - 8) * Math.sin(radians);
   
       // zodiac icons offset to sector center
       const iconX =
@@ -210,12 +210,27 @@ function drawCircle(svg, cx, cy, r, type) {
       .attr("mark-planet", planet)
       .attr("stroke-width", 2);
   }
+
+  const zodiacSigns = [
+    { name: "aries", start: 0 },
+    { name: "taurus", start: 30 },
+    { name: "gemini", start: 60 },
+    { name: "cancer", start: 90 },
+    { name: "leo", start: 120 },
+    { name: "virgo", start: 150 },
+    { name: "libra", start: 180 },
+    { name: "scorpio", start: 210 },
+    { name: "sagittarius", start: 240 },
+    { name: "capricorn", start: 270 },
+    { name: "aquarius", start: 300 },
+    { name: "pisces", start: 330 },
+  ];
   
   function drawPlanets(data, radiuses) {
     const planets = data.astros;
     const svg = d3.select("#natalChart");
     const strokeColor = "#ffffff";
-    const planetsOrbit = radiuses.CX * 0.62;
+    const planetsOrbit = radiuses.CX * 0.92;
   
     for (let planetKey in planets) {
       let planet = planets[planetKey];
@@ -315,24 +330,56 @@ function drawCircle(svg, cx, cy, r, type) {
               const infoWindow = document.createElement("div");
               infoWindow.classList.add("info-window");
               infoWindow.style.position = "fixed";
+              infoWindow.style.width = `${window.innerWidth}px`;
+              infoWindow.style.maxHeight = `${window.innerHeight - window.innerWidth - 20 - 64 - 40 - 48 }px`;
               infoWindow.style.bottom = "-100%"; // Start from bottom
               infoWindow.style.left = "0";
               infoWindow.style.opacity = "0";
               infoWindow.style.backgroundColor = "#0f1216";
               infoWindow.style.padding = "16px";
-              infoWindow.innerText = JSON.stringify(storedData); // Display stored data
+              console.log(storedData);
+
+              
+              // console.log(aspects);
+              const zodiacNum = storedData.sign-1;
+              const zodiac = zodiacSigns[zodiacNum].name;
+              const retrograde = storedData.retrograde? "" : `<div class="info-retrograde">retrograde</div>`
+              const info = `<div class="info-heading"><h3 class="info-h3">${storedData.name} <img src="/icons/planets/${storedData.name}.svg" alt="" class="info-planet-icon" /> in <img src="/icons/zodiac-signs/${zodiac}.svg" alt="" class="info-zodiac-icon" /> ${zodiac}</h3><p class="info-deg">${storedData.position.degrees}&#176; ${storedData.position.minutes}	
+              &#8242; ${storedData.position.seconds}&#8243;</p><p class="info-type">type: ${storedData.type}</p>${retrograde}</div><div></div>`
+              // infoWindow.innerText = JSON.stringify(storedData); // Display stored data
+
+              const infoScroll = document.createElement("div");
+              infoScroll.style.maxHeight = `${window.innerHeight - window.innerWidth - 20 - 64 - 40 - 48 - 32 }px`;
+              infoScroll.style.overflowY = "auto";
+
+              infoScroll.innerHTML = info;
+              const aspects = document.querySelectorAll(`[aspect-planets*="${storedData.name}"]`);
+              aspects.forEach((aspect) => {
+                const aspectElement = document.createElement("p");
+                aspectElement.classList.add("info-aspect");
+                console.log("attr:", aspect.attributes[2].value)
+                console.log("name:", storedData.name)
+                let secondPlanet = aspect.attributes[2].value.replace(`${storedData.name}`,'');
+                secondPlanet = secondPlanet.replace(" ", "");
+                console.log("planet:", secondPlanet);
+                const aspectType = aspect.attributes[3].value;
+                aspectElement.innerHTML = `${aspectType} ${storedData.name} <img src="/icons/planets/${storedData.name}.svg" alt="" class="info-aspect-icon" /> <span class=${aspectType == "trigone"? "" : "aspect-type-font-big"}>${aspectsSymbols[aspectType]}</span> <img src="/icons/planets/${secondPlanet}.svg" alt="" class="info-aspect-icon" /> ${secondPlanet}`;
+                infoScroll.appendChild(aspectElement);
+              })
+              infoWindow.appendChild(infoScroll);
               document.body.appendChild(infoWindow);
   
               // Animate the window to reveal from the bottom with opacity
               infoWindow.style.transition = "bottom 0.3s, opacity 0.3s";
   
               setTimeout(() => {
-                infoWindow.style.bottom = "50px"; // Move to reveal position
+                infoWindow.style.bottom = "0"; // Move to reveal position
                 infoWindow.style.opacity = "1"; // Fully reveal the window
               }, 200);
               // Add a close button to the window
               const closeButton = document.createElement("button");
-              closeButton.innerText = "Close";
+              closeButton.classList.add("info-close-btn");
+              closeButton.innerText = "x";
               closeButton.addEventListener("click", function () {
                 infoWindow.style.bottom = "-200px"; // Move out of view
                 infoWindow.style.opacity = "0"; // Fade out the window
@@ -363,6 +410,17 @@ function drawCircle(svg, cx, cy, r, type) {
     quadrature: "#F56EBD",
     trigone: "#12D861",
     opposition: "#FF8A22",
+    quincunx: "#6D1DBA",
+  };
+
+  const aspectsSymbols = {
+    conjunction: "☌",
+    sextile: "⚹",
+    semisextile: "⚺",
+    quadrature: "□",
+    trigone: "△",
+    opposition: "☍",
+    quincunx: "⚻"
   };
   
   function drawAspects(data, radiuses) {
@@ -408,7 +466,7 @@ function drawCircle(svg, cx, cy, r, type) {
       width: width,
       CX: width / 2,
       CY: width / 2 + 20,
-      zodiacR: (width / 2) * 0.92,
+      zodiacR: (width / 2) * 0.62,
       houseR: (width / 2) * 0.43,
       planetR: (width / 2) * 0.8,
       aspectR: (width / 2) * 0.32,
