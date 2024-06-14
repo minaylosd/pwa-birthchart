@@ -459,7 +459,7 @@ function drawCircle(svg, cx, cy, r, type) {
   
   function drawNatalChart(drawingData) {
     const data = drawingData.data;
-    console.log(drawingData)
+    // console.log(drawingData)
     const width = window.innerWidth;
     const svg = d3.select("#natalChart");
     const radiuses = {

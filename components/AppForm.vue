@@ -68,7 +68,7 @@ const error = ref(null);
 async function getCities() {
   if (cityRef.value.length >= 3) {
     loadingCities.value = true;
-    console.log(cityRef.value);
+    // console.log(cityRef.value);
     try {
       const response = await fetch(
         `/api/fetchCity?city=${encodeURIComponent(cityRef.value)}`
@@ -131,7 +131,7 @@ async function submitForm(e) {
     latitudeRef.value != "" &&
     longitudeRef.value != "" &&
     timezoneRef.value != "";
-  console.log(formFilled);
+  // console.log(formFilled);
   if (!formFilled) {
     alert(
       "Please fill in all fields. Pick a city from the list below after typing in. 🌟"
