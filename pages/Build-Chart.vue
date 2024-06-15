@@ -129,17 +129,8 @@ async function handleBuildChart(formData) {
 <template>
   <h1 v-if="showForm">Build chart</h1>
   <div v-else class="heading">
-    <div class="half">
-      <h1 class="date-time">
-        Chart for
-        <span>{{ chartDate }} {{ chartTime }}</span>
-      </h1>
-      <p class="address">{{ chartCity }}</p>
-    </div>
-    <div class="half">
-      <p class="timezone">/</p>
-      <p class="geometry">{{ chartTimezone }}</p>
-    </div>
+    <h1 class="chart-h1">Planet positions</h1>
+    <p class="address">at {{ chartDate }} {{ chartTime }}, {{ chartCity }}</p>
   </div>
   <AppForm v-if="showForm" type="build" @form-submitted="handleBuildChart" />
   <div>
@@ -164,6 +155,12 @@ async function handleBuildChart(formData) {
 h1 {
   padding: 0 1rem;
 }
+
+.chart-h1 {
+  padding: 0;
+  margin: 0 0 8px 0;
+}
+
 .content {
   display: flex;
   /* flex-direction: column; */
@@ -365,12 +362,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .heading {
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
   align-items: center;
   gap: 16px;
   padding: 16px;
-  margin: 0;
+  margin: 8px 0;
 }
 
 .half {
@@ -393,6 +390,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   font-size: var(--size-xxs);
   font-family: var(--font-main-var);
   font-weight: 200;
+  border-bottom: solid rgba(255, 255, 255, 0.5) 1px;
+  padding-bottom: 8px;
 }
 
 .timezone {

@@ -8,7 +8,12 @@
     <p>Add new person</p>
   </div>
   <div class="list" v-else>
-    <div class="list-item" v-for="person in persons" :key="person.id">
+    <NuxtLink
+      :to="`/persons/${person.id}`"
+      class="list-item"
+      v-for="person in persons"
+      :key="person.id"
+    >
       <div>
         <h3 class="name">{{ person.person.name }}</h3>
         <p class="city">{{ person.person.city }}</p>
@@ -19,7 +24,7 @@
           lat: {{ person.person.latitude }}, lon: {{ person.person.longitude }}
         </p>
       </div>
-    </div>
+    </NuxtLink>
   </div>
 </template>
 
@@ -30,7 +35,6 @@ import { getAllPersons } from "../utils/database";
 const persons = ref([]);
 async function loadPersons() {
   persons.value = await getAllPersons();
-  console.log(persons.value);
 }
 
 onMounted(() => {

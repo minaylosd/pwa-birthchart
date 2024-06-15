@@ -273,6 +273,7 @@ function drawCircle(svg, cx, cy, r, type) {
         // choose better color
         .attr("stroke", "#ffffff")
         .attr("stroke-width", 0.5);
+       
   
       // Load SVG dynamically
       d3.xml(`/icons/planets/${planetKey}.svg`).then((data) => {
@@ -459,7 +460,6 @@ function drawCircle(svg, cx, cy, r, type) {
   
   function drawNatalChart(drawingData) {
     const data = drawingData.data;
-    // console.log(drawingData)
     const width = window.innerWidth;
     const svg = d3.select("#natalChart");
     const radiuses = {

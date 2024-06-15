@@ -39,6 +39,15 @@ async function editPerson(id, updatedPerson) {
     await tx.done
 }
 
+async function getPerson(id) {
+    const db = await initDB();
+    const tx = db.transaction(storeName, 'readonly');
+    const store = tx.objectStore(storeName);
+    const person = await store.get(id);
+    await tx.done
+    return person;
+}
+
 async function getAllPersons() {
     const db = await initDB();
     const tx = db.transaction(storeName, 'readonly');
@@ -48,4 +57,4 @@ async function getAllPersons() {
     return persons;
 }
 
-export {initDB, addPerson, deletePerson, editPerson, getAllPersons};
+export {initDB, addPerson, deletePerson, editPerson, getPerson, getAllPersons};
