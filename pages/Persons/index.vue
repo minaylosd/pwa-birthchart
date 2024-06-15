@@ -2,9 +2,9 @@
   <h1>My persons</h1>
   <div class="content" v-if="persons.length === 0">
     <p>The list are currently empty</p>
-    <router-link to="/add-person"
+    <NuxtLink to="/add-person"
       ><img src="/icons/pwa/pwa-192x192.png" alt=""
-    /></router-link>
+    /></NuxtLink>
     <p>Add new person</p>
   </div>
   <div class="list" v-else>
