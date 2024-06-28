@@ -6,10 +6,12 @@ import { drawNatalChart } from "#imports";
 const person = ref(null);
 const { id } = useRoute().params;
 const idNum = parseInt(id);
+const editMode = ref(false);
 
 async function loadPerson(idNum) {
   const p = await getPerson(idNum);
-  person.value = p;
+  console.log(p.person);
+  person.value = p.person;
   drawNatalChart(p);
   showChart();
 }
@@ -24,6 +26,23 @@ function showChart() {
   //   chart.style = "display:block;";
 }
 
+function openEditForm() {
+  editMode.value = true;
+}
+
+// TODO: before edit person i need to fetch new horoscope,
+//       create new person with all the horoscopes etc,
+//       and after that assigning new object to person;
+async function handleEditPerson(idNum, formData) {
+  const p = await editPerson(idNum, formData);
+  person.value = p;
+  editMode.value = false;
+}
+
+async function handleDeletePerson(idNum) {
+  deletePerson(idNum);
+}
+
 onMounted(() => {
   loadPerson(idNum);
 });
@@ -32,22 +51,29 @@ onMounted(() => {
 <template>
   <div v-if="person" class="heading">
     <div>
-      <h1 class="name">{{ person.person.name }}</h1>
-      <p class="city">{{ person.person.city }}</p>
-      <p class="city">
-        date of birth: {{ person.person.date }} {{ person.person.time }}
-      </p>
-      <p class="city">timezone: {{ person.person.timezone }}</p>
+      <h1 class="name">
+        {{ editMode == "false" ? person.name : "Edit person" }}
+      </h1>
+      <p class="city">{{ person.city }}</p>
+      <p class="city">date of birth: {{ person.date }} {{ person.time }}</p>
+      <p class="city">timezone: {{ person.timezone }}</p>
       <p class="rand">
-        lat: {{ person.person.latitude }}, lon: {{ person.person.longitude }}
+        lat: {{ person.latitude }}, lon: {{ person.longitude }}
       </p>
     </div>
     <div class="btns">
-      <button>edit</button>
-      <button>delete</button>
+      <button @click="openEditForm">edit</button>
+      <button @click="handleDeletePerson">delete</button>
     </div>
   </div>
-  <svg id="natalChart" width="0" height="0"></svg>
+  <svg v-show="!editMode" id="natalChart" width="0" height="0"></svg>
+  <AppForm
+    v-if="person"
+    v-show="editMode"
+    type="edit"
+    :person="person"
+    @form-submitted="handleEditPerson"
+  />
 </template>
 
 <style scoped>

@@ -25,7 +25,7 @@ async function deletePerson(id) {
     const db = await initDB();
     const tx = db.transaction(storeName, 'readwrite');
     const store = tx.objectStore(storeName);
-    await store.delete(person);
+    await store.delete(id);
     await tx.done
 }
 
@@ -37,6 +37,7 @@ async function editPerson(id, updatedPerson) {
     Object.assign(person, updatedPerson);
     await store.put(person);
     await tx.done
+    return updatedPerson;
 }
 
 async function getPerson(id) {

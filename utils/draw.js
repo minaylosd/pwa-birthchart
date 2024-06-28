@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { gsap } from "gsap";
 
 function drawCircle(svg, cx, cy, r, type) {
     const fill = "#0f1216";
@@ -10,7 +11,13 @@ function drawCircle(svg, cx, cy, r, type) {
       .attr("r", r)
       .attr("type", type)
       .attr("fill", fill)
-      .attr("stroke", stroke);
+      .attr("stroke", stroke)
+      .style("transform-origin", "center")
+      // const circle = d3.select(`[type="${type}"]`);
+      // const circleFigure = circle._groups[0][0];
+      // console.log(circle._groups[0][0])
+      // gsap.fromTo(circleFigure, {scale: 0}, {scale: 1, ease: "elastic.out", duration: 0.8})
+
     //   .attr("stroke-width", 0.5);
   }
   
@@ -83,8 +90,10 @@ function drawCircle(svg, cx, cy, r, type) {
           .attr("height", 28)
           .attr("x", iconX - 28 / 2)
           .attr("y", iconY - 28 / 2)
-          .attr("style", "pointer-events: all;")
-          .attr("zodiac-sign", sign.name);
+          // .style("pointer-events", "all")
+          // .style("transform", "scale(0)")
+          // .style("transform-origin", "center")
+          .attr("data-zodiac-sign", sign.name);
       });
     });
   }
@@ -486,6 +495,15 @@ function drawCircle(svg, cx, cy, r, type) {
     drawCircle(svg, radiuses.CX, radiuses.CY, radiuses.aspectR, "aspects-circle");
     drawPlanets(data, radiuses);
     drawAspects(data, radiuses);
+
+    // const circles = document.querySelectorAll("circle");
+    // gsap.fromTo(circles, {scale: 0}, {scale: 1, ease: "bounce.out", duration: 0.6, stagger: 0.2});
+
+    // const zad = document.querySelectorAll('[data-zodiac-sign]');
+    // console.log(zad);
+    // const zod = d3.selectAll('[data-zodiac-sign]');
+    // console.log(zod);
+
   }
 
   export {drawNatalChart}

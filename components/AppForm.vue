@@ -5,6 +5,7 @@ import { ref } from "vue";
 
 const props = defineProps({
   type: String,
+  person: Object,
 });
 
 const emit = defineEmits(["formSubmitted"]);
@@ -15,18 +16,23 @@ const cities = ref([]);
 const loadingCities = ref(false);
 const loaded = ref(false);
 
-const nameRef = ref("");
-const dateRef = ref("2000-01-01");
-const timeRef = ref("00:00");
-const cityRef = ref("");
-const latitudeRef = ref("");
-const longitudeRef = ref("");
-const timezoneRef = ref("");
+const nameRef = props.type == "edit" ? ref(`${props.person.name}`) : ref("");
+const dateRef =
+  props.type == "edit" ? ref(`${props.person.date}`) : ref("2000-01-01");
+const timeRef =
+  props.type == "edit" ? ref(`${props.person.time}`) : ref("00:00");
+const cityRef = props.type == "edit" ? ref(`${props.person.city}`) : ref("");
+const latitudeRef =
+  props.type == "edit" ? ref(`${props.person.latitude}`) : ref("");
+const longitudeRef =
+  props.type == "edit" ? ref(`${props.person.longitude}`) : ref("");
+const timezoneRef =
+  props.type == "edit" ? ref(`${props.person.timezone}`) : ref("");
 
 // for debouncing fetch
 let timeout;
 
-const person = props.addPerson;
+// const person = props.addPerson;
 
 // Function to convert timezone offset format
 function convertTimeZoneFormat(timezoneOffset) {
@@ -156,7 +162,7 @@ async function submitForm(e) {
 <template>
   <form @submit.prevent="submitForm" class="content">
     <div class="field-wrapper">
-      <div v-if="props.type === 'add'" class="field name">
+      <div v-if="props.type !== 'build'" class="field name">
         <label for="person-name">Name</label>
         <input
           id="person-name"
@@ -277,7 +283,7 @@ async function submitForm(e) {
         <li>Enter your place of birth</li>
         <li>lets go!</li>
       </ul> -->
-      <Circles />
+      <Circles v-if="props.type !== 'edit'" />
     </div>
 
     <div class="input-btn">
