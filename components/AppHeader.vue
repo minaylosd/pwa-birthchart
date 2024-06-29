@@ -3,10 +3,22 @@ import type { NuxtLink } from "#build/components"; import type { NuxtLink } from
 type { NuxtLink } from "#build/components"; import ref from "vue"
 
 <template>
-  <header>
-    <div class="header__wrapper">
-      <div class="header__name">ChartMaster</div>
-      <img @click="toggleNav" src="/burger/burger.svg" alt="" />
+  <header class="bg-[#2b2b2b] fixed lg:static top-0 left-0 w-full z-10 mx-auto">
+    <div
+      data-animation="header__wrapper"
+      class="flex items-center justify-between w-full pt-5 pb-4 px-4 md:px-10 lg:pt-0 lg:pb-5"
+    >
+      <div
+        data-animation="header__name"
+        class="justify-self-start font-metana-outline uppercase text-3xl lg:text-8xl"
+      >
+        Astrologer
+      </div>
+      <div class="uppercase text-white text-3xl">/</div>
+      <!-- <img @click="toggleNav" src="/burger/burger.svg" alt="" /> -->
+      <div class="w-8 h-8">
+        <Burger />
+      </div>
     </div>
     <nav v-show="showNav">
       <NuxtLink @click="toggleNav" to="/"
@@ -67,13 +79,13 @@ function toggleNav() {
 <style scoped>
 header {
   padding: 10px 1rem 0 1rem;
-  margin: 0 auto;
-  background-color: var(--background);
-  position: fixed;
-  width: 100%;
-  z-index: 10;
-  top: 0;
-  left: 0;
+  /* margin: 0 auto; */
+  /* background-color: var(--background); */
+  /* position: fixed; */
+  /* width: 100%; */
+  /* z-index: 10; */
+  /* top: 0; */
+  /* left: 0; */
 }
 
 .header__wrapper {

@@ -52,5 +52,6 @@ async function handleAddPerson(formData) {
 <style scoped>
 h1 {
   padding: 0 1rem;
+  font-family: var(--font-metana);
 }
 </style>

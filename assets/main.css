@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: "Metamorphous";
   src: local("Metamorphous"),
@@ -16,11 +20,23 @@
     url("~/assets/fonts/dm-sans-extra-light.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Neue Metana Next Semibold";
+  src: url("~/assets/fonts/NeueMetanaNext-SemiBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Neue Metana Next Outline Black";
+  src: url("~/assets/fonts/NeueMetanaNextOutline-Black.otf") format("opentype");
+}
+
 :root {
   --font-standard: "Inter", sans-serif;
   --font-main: "Manrope";
   --font-display: "Metamorphous";
   --font-main-var: "DM Sans";
+  --font-metana: "Neue Metana Next Semibold";
+  --font-metana-outline: "Neue Metana Next Outline Black";
 
   font-family: var(--font-main);
   line-height: 1.5;
@@ -59,13 +75,21 @@
   box-sizing: border-box;
 }
 
+.font-metana {
+  font-family: var(--font-metana);
+}
+
+.font-metana-outline {
+  font-family: var(--font-metana-outline);
+}
+
 a {
   color: white;
   text-decoration: none;
 }
 
 body {
-  background-color: var(--background);
+  background-color: #2b2b2b;
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
@@ -75,34 +99,7 @@ main {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-top: 64px;
-}
-
-h1 {
-  font-family: var(--font-display);
-  font-size: var(--size-lg);
-  line-height: 1.1;
-  margin: var(--size-md) 0;
-  text-align: left;
-  padding: 0 1rem;
-}
-
-h2 {
-  font-family: var(--font-display);
-  font-size: var(--size-lg);
-  padding: 0 1rem;
-}
-
-h3 {
-  font-family: var(--font-display);
-  font-size: var(--size-md);
-  padding: 0 1rem;
-}
-
-h4 {
-  font-family: var(--font-display);
-  font-size: var(--size-sm);
-  padding: 0 1rem;
+  /* padding-top: 64px; */
 }
 
 p {
